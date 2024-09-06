@@ -12,5 +12,54 @@
 	</select>
 	
 	<!-- 단건조회 -->
+	<select id="selectDeptInfo" resultType="DeptVO">
+		SELECT department_id
+	        , department_name
+	        , manager_id
+	        , location_id
+		FROM departments 
+		WHERE department_id = #{departmentId}
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="insertDeptInfo" parameterType="DeptVO">
+		INSERT INTO departments
+			(
+			department_id
+	        , department_name
+	        , manager_id
+		    , location_id
+	        )
+	     VALUES(
+	     		 #{departmentId} 
+	     		<!-- employees_seq.NEXTVAL -->
+	     		, #{departmentName}
+	     		, #{managerId}
+	     		, #{locationId}
+	     		)
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateDeptInfo">
+		UPDATE departments
+		SET
+			last_name = #{emp.lastName}
+			<if test="dept.departmentName != null and !dept.departmentName.equals('')">
+			, email = #{dept.departmentName}
+			</if>
+			<if test="emp.jobId != null and !emp.jobId.equals('')">
+			, job_id = #{emp.jobId}
+			</if>
+			<if test="emp.hireDate != null">
+			, hire_date = #{emp.hireDate}
+			</if>
+		WHERE employee_id = #{eid}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteDeptInfo" parameterType="int">
+		DELETE FROM employees
+		WHERE employee_id = #{id}
+	</delete>
 	
 </mapper>
